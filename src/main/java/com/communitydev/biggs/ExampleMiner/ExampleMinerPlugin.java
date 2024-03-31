@@ -100,7 +100,7 @@ public class ExampleMinerPlugin extends Plugin {
             return;
         }
         if (client.getGameState() != GameState.LOGGED_IN) {
-            return;
+            return; //hi this is a push
         }
         tickCount++;
         player = client.getLocalPlayer();

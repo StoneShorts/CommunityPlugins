@@ -41,7 +41,7 @@ class ExampleMinerOverlay extends OverlayPanel {
     public Dimension render(Graphics2D graphics) {
 
         if (plugin.botTimer == null) {
-            log.debug("Overlay conditions not met, not starting overlay");
+         //   log.debug("Overlay conditions not met, not starting overlay");
             return null;
         }
         Color backgroundColor = new Color(0,98,255, 125); // #66ff00 with transparency

@@ -3,6 +3,7 @@ package com.example.EthanApiPlugin;
 import com.example.EthanApiPlugin.Collections.*;
 import com.example.EthanApiPlugin.Collections.query.QuickPrayer;
 import com.example.EthanApiPlugin.PathFinding.Node;
+import com.example.InteractionApi.NPCInteraction;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -14,6 +15,7 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.RuneLite;
+import net.runelite.client.callback.ClientThread;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
@@ -46,6 +48,7 @@ public class EthanApiPlugin extends Plugin {
     static Client client = RuneLite.getInjector().getInstance(Client.class);
     static PluginManager pluginManager = RuneLite.getInjector().getInstance(PluginManager.class);
     static ItemManager itemManager = RuneLite.getInjector().getInstance(ItemManager.class);
+    static ClientThread clientThread = RuneLite.getInjector().getInstance(ClientThread.class);
     static Method doAction = null;
     static String animationField = null;
     static final HashSet<WorldPoint> EMPTY_SET = new HashSet<>();
@@ -350,8 +353,14 @@ public class EthanApiPlugin extends Plugin {
         }
         return (flag & CollisionDataFlag.BLOCK_MOVEMENT_FLOOR_DECORATION) != CollisionDataFlag.BLOCK_MOVEMENT_FLOOR_DECORATION;
     }
-
-
+    public static void attackNPC(String name) {
+        clientThread.invoke(() -> {
+            Optional<NPC> npcToInteract = NPCs.search().withName(name).nearestToPlayer();
+            npcToInteract.ifPresent(npc -> {
+                NPCInteraction.interact(npc, "Attack");
+            });
+        });
+    }
     @Deprecated
     public static Widget getItem(int id, WidgetInfo container) {
         if (client.getWidget(container) == null) {

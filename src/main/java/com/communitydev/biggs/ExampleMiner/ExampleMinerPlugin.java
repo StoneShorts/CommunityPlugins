@@ -24,7 +24,7 @@ import javax.inject.Inject;
 import java.time.Instant;
 
 @PluginDescriptor(
-        name = "<font color=#b3f073>[LC]</font> SwampMiner</html>",
+        name = "<html><font color=#48f542>[LC]</font><font color=#b3f073>[B]</font> Miner</html>",
         description = "Mines Tin & Copper @ Lumby Swamp, and Banks.",
         enabledByDefault = false,
         tags = {"uz", "polar", "combat"})
@@ -117,7 +117,7 @@ public class ExampleMinerPlugin extends Plugin {
     }
 
     State getStates() {
-        log.info("Current task: TIMEOUT");
+       // log.info("Current task: TIMEOUT"); ill add that later
         return State.TIMEOUT;
     }
 
